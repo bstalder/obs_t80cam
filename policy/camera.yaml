@@ -64,7 +64,7 @@ CCD : &CCD
     refpos : [5279.5, 5279.5]
     offset : [0, 0]
     # This is the orientation we need to put the serial direction along the x-axis
-    bbox : [[0, 0], [10559, 105659]]   # This is a bbox defined by corners rather than extent.
+    bbox : [[0, 0], [10559, 10559]]   # This is a bbox defined by corners rather than extent.
                                     # Needs to be made consistent with others. TODO: DM-13098
     pixelSize : [0.009, 0.009]          # in mm
     transformDict : {nativeSys : 'Pixels', transforms : None}
@@ -92,7 +92,7 @@ CCDs :
            "10": &A10
              <<: *AMP
              hdu : 1
-             flipXY : [True, False]
+             flipXY : [False, False]
              ixy : [0, 0]
              gain : 2.05
              readNoise : 5.688
@@ -141,7 +141,7 @@ CCDs :
            "07": &A07
              <<: *AMP
              hdu : 9
-             flipXY : [True, True]
+             flipXY : [False, False]
              ixy : [7, 1]
              gain : 2.05
              readNoise : 5.688

@@ -313,7 +313,15 @@ class AtlasMapper(CameraMapper):
             md = afwImage.readMetadata(fileName)  # or hdu = INT_MIN; -(1 << 31)
 
         return afwImage.VisitInfo(md)
-    def std_raw_amp(self, item, dataId):
+
+        def bypass_ccdExposureId_bits(self, datasetType, pythonType, location, dataId):
+            # blatantly cargo culted from obs_test
+            return 41
+            
+        def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
+            return self._computeCcdExposureId(dataId)
+
+        def std_raw_amp(self, item, dataId):
         """Amplifier-wise standardization of image-like objects.
 
         Parameters
