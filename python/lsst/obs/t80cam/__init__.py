@@ -21,5 +21,5 @@
 #
 from __future__ import absolute_import
 from .version import *
-from .atlas import *
-from .atlasMapper import *
+from .t80cam import *
+from .t80camMapper import *

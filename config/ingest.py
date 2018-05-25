@@ -1,6 +1,6 @@
-from lsst.obs.atlas.ingest import AtlasParseTask
+from lsst.obs.t80cam.ingest import T80camParseTask
 
-config.parse.retarget(AtlasParseTask)
+config.parse.retarget(T80camParseTask)
 
 config.parse.translation = {
     'expTime': 'EXPTIME',

@@ -1,4 +1,4 @@
-""""ParseTask and CalibsParseTask for the ATLAS telescope."""
+""""ParseTask and CalibsParseTask for the T80CAM telescope."""
 
 from __future__ import division, print_function
 import os
@@ -10,14 +10,14 @@ import lsst.log as lsstLog
 EXTENSIONS = ["fits", "gz", "fz"]  # Filename extensions to strip off
 
 
-class AtlasParseTask(ParseTask):
-    """Parser suitable for atlas data.
+class T80camParseTask(ParseTask):
+    """Parser suitable for t80cam data.
 
     See https://docushare.lsstcorp.org/docushare/dsweb/Get/Version-43119/FITS_Raft.pdf
     """
 
     def __init__(self, config, *args, **kwargs):
-        """Initialization for the Atlas ParseTask."""
+        """Initialization for the T80cam ParseTask."""
         super(ParseTask, self).__init__(config, *args, **kwargs)
 
     def getInfo(self, filename):
@@ -87,7 +87,7 @@ class AtlasParseTask(ParseTask):
         raw_wl = 650.0
         wl = int(round(raw_wl))
         if abs(raw_wl-wl) >= 0.1:
-            logger = lsstLog.Log.getLogger('obs.atlas.ingest')
+            logger = lsstLog.Log.getLogger('obs.t80cam.ingest')
             logger.warn('Translated significantly non-integer wavelength; '
                         '%s is more than 0.1nm from an integer value', raw_wl)
         return wl
@@ -114,7 +114,7 @@ class AtlasParseTask(ParseTask):
 #############################################################################################################
 
 
-class AtlasCalibsParseTask(CalibsParseTask):
+class T80camCalibsParseTask(CalibsParseTask):
     """Parser for calibs."""
 
     def _translateFromCalibId(self, field, md):

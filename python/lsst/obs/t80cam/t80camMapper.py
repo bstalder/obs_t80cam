@@ -19,7 +19,7 @@
 # the GNU General Public License along with this program.  If not,
 # see <http://www.lsstcorp.org/LegalNotices/>.
 #
-"""The Atlas Mapper."""  # necessary to suppress D100 flake8 warning.
+"""The T80cam Mapper."""  # necessary to suppress D100 flake8 warning.
 
 from __future__ import division, print_function
 
@@ -29,12 +29,12 @@ import lsst.afw.image.utils as afwImageUtils
 from lsst.obs.base import CameraMapper, MakeRawVisitInfo
 import lsst.daf.persistence as dafPersist
 
-from lsst.obs.atlas import Atlas
+from lsst.obs.t80cam import T80cam
 
-__all__ = ["AtlasMapper"]
+__all__ = ["T80camMapper"]
 
 
-class AtlasMakeRawVisitInfo(MakeRawVisitInfo):
+class T80camMakeRawVisitInfo(MakeRawVisitInfo):
     """functor to make a VisitInfo from the FITS header of a raw image."""
 
     def setArgDict(self, md, argDict):
@@ -47,7 +47,7 @@ class AtlasMakeRawVisitInfo(MakeRawVisitInfo):
         argDict : `dict`
             The argument dictionary used to construct the visit info, modified in place
         """
-        super(AtlasMakeRawVisitInfo, self).setArgDict(md, argDict)
+        super(T80camMakeRawVisitInfo, self).setArgDict(md, argDict)
         argDict["darkTime"] = self.popFloat(md, "DARKTIME")
 
         # Done setting argDict; check values now that all the header keywords have been consumed
@@ -110,21 +110,21 @@ def assemble_raw(dataId, componentInfo, cls):
     #
     # We need to standardize, but have no legal way to call std_raw.  The butler should do this for us.
     #
-    atlasMapper = AtlasMapper()
-    exposure = atlasMapper.std_raw(exposure, dataId)
+    t80camMapper = T80camMapper()
+    exposure = t80camMapper.std_raw(exposure, dataId)
 
     return exposure
 
 
-class AtlasMapper(CameraMapper):
-    """The Mapper for the Atlas."""
+class T80camMapper(CameraMapper):
+    """The Mapper for the T80cam."""
 
-    packageName = 'obs_atlas'
-    MakeRawVisitInfoClass = AtlasMakeRawVisitInfo
+    packageName = 'obs_t80cam'
+    MakeRawVisitInfoClass = T80camMakeRawVisitInfo
 
     def __init__(self, inputPolicy=None, **kwargs):
-        """Initialization for the Atlas Mapper."""
-        policyFile = dafPersist.Policy.defaultPolicyFile(self.packageName, "atlasMapper.yaml", "policy")
+        """Initialization for the T80cam Mapper."""
+        policyFile = dafPersist.Policy.defaultPolicyFile(self.packageName, "t80camMapper.yaml", "policy")
         policy = dafPersist.Policy(policyFile)
 
         CameraMapper.__init__(self, policy, os.path.dirname(policyFile), **kwargs)
@@ -167,7 +167,7 @@ class AtlasMapper(CameraMapper):
         camera : `lsst.afw.cameraGeom.Camera`
             The camera object
         """
-        return Atlas()
+        return T80cam()
 
     def _extractDetectorName(self, dataId):
         """Extract the dector name from a dataId.

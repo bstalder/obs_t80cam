@@ -1,5 +1,5 @@
-from lsst.obs.atlas.ingest import AtlasCalibsParseTask
-config.parse.retarget(AtlasCalibsParseTask)
+from lsst.obs.t80cam.ingest import T80camCalibsParseTask
+config.parse.retarget(T80camCalibsParseTask)
 
 config.register.columns = {'filter': 'text',
                            'ccd': 'int',

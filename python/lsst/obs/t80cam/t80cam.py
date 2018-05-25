@@ -25,13 +25,13 @@ import lsst.utils as utils
 from lsst.obs.base.yamlCamera import YamlCamera
 
 
-class Atlas(YamlCamera):
-    """The ATLAS Telescope (atlas)
+class T80cam(YamlCamera):
+    """The T80CAM Telescope (t80cam)
     """
-    packageName = 'obs_atlas'
+    packageName = 'obs_t80cam'
 
     def __init__(self, cameraYamlFile=None):
-        """Construct atlas
+        """Construct t80cam
         """
         if not cameraYamlFile:
             cameraYamlFile = os.path.join(utils.getPackageDir(self.packageName), "policy", "camera.yaml")
