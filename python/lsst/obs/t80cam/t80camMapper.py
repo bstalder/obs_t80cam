@@ -314,27 +314,27 @@ class T80camMapper(CameraMapper):
 
         return afwImage.VisitInfo(md)
 
-        def bypass_ccdExposureId_bits(self, datasetType, pythonType, location, dataId):
-            # blatantly cargo culted from obs_test
-            return 41
-            
-        def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
-            return self._computeCcdExposureId(dataId)
+    def bypass_ccdExposureId_bits(self, datasetType, pythonType, location, dataId):
+        # blatantly cargo culted from obs_test
+        return 41
 
-        def std_raw_amp(self, item, dataId):
+    def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
+        return self._computeCcdExposureId(dataId)
+
+    def std_raw_amp(self, item, dataId):
         """Amplifier-wise standardization of image-like objects.
 
         Parameters
         ----------
         item : image-like object; any of `lsst.afw.image.Exposure`, `lsst.afw.image.DecoratedImage`,
-               `lsst.afw.image.Image`, or `lsst.afw.image.MaskedImage`
+        `lsst.afw.image.Image`, or `lsst.afw.image.MaskedImage`
         dataId : `lsst.daf.persistence.dataId.DataId`
-            The data ID
+        The data ID
 
         Returns
         -------
         exp : `lsst.afw.image.Exposure`
-            The standardized exposure
+        The standardized exposure
         """
         return self._standardizeExposure(self.exposures['raw_amp'], item, dataId,
                                          trimmed=False, setVisitInfo=False)

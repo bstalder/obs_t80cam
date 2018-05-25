@@ -26,24 +26,24 @@
 # Each has sixteen amplifiers with names like "00".."07" and "10".."17"
 
 name : "t80cam"
-plateScale : 206.67                      # plate scale, in arcseconds on sky/mm (1.86 arcsec/pix, 9um pixels)
+plateScale : 55.567                      # plate scale, in arcseconds on sky/mm (0.5 arcsec/pix, 9um pixels)
 radialCoeffs : [0.0, 1.0, 0.0, 0.0]     # radial distortion coefficients (c_0 + c_1 r + c_2 r^2 + ...)
 
 #
 # A single amplifier ("segment" to the camera team)
 #
-AMP_ITL : &AMP_ITL
+AMP_E2V : &AMP_E2V
     # trimmed
     readCorner : LL
 
-    rawBBox                 : [[0,    0], [1350,    5300]]  # total size of one amp's raw data (10560 x 10560 imaging area)
+    rawBBox                 : [[0,    0], [1206,    4670]]  # total size of one amp's raw data (9648 x 9340 imaging area)
 
   # name of section     : [[start,start], [width, height]] # start is zero-based, length=length of arr
-    rawDataBBox             : [[0,    0], [1320,    5280]]  # data region in raw data
-    rawSerialPrescanBBox    : [[0,    0], [0,      5280]]  # serial prescan (often == extended)
-    rawSerialOverscanBBox   : [[1320,  0], [30,     5280]]  # serial overscan
-    rawParallelPrescanBBox  : [[0,    1], [0,         0]]  # pixels digitised before first parallel transfer
-    rawParallelOverscanBBox : [[0, 5280], [1320,      20]]  # parallel overscan
+    rawDataBBox             : [[27,    0], [1152,    4616]]  # data region in raw data
+    rawSerialPrescanBBox    : [[0,    0], [27,      4670]]  # serial prescan (often == extended)
+    rawSerialOverscanBBox   : [[1179,  0], [27,     4670]]  # serial overscan
+    rawParallelPrescanBBox  : [[0,    0], [0,         0]]  # pixels digitised before first parallel transfer
+    rawParallelOverscanBBox : [[0, 4616], [1206,      54]]  # parallel overscan
 
     saturation : 65535                  # saturation level, DN XXX Should this be in electrons?
 
@@ -54,17 +54,17 @@ AMP_ITL : &AMP_ITL
     linearityCoeffs : [0, 65535]        # == [linearityThreshold, linearityMax]
 
 AMP : &AMP
-  << : *AMP_ITL
+  << : *AMP_E2V
   perAmpData : False                     # data is provided independentally for each amplifier (a la LSST)?  **T80CAM fits files are flat.**
 #
 # A single CCD ("sensor" to the camera team)
 #
 CCD : &CCD
     detectorType : 0
-    refpos : [5279.5, 5279.5]
+    refpos : [4607.0, 4615.0]
     offset : [0, 0]
     # This is the orientation we need to put the serial direction along the x-axis
-    bbox : [[0, 0], [10559, 10559]]   # This is a bbox defined by corners rather than extent.
+    bbox : [[0, 0], [9647, 9339]]   # This is a bbox defined by corners rather than extent.
                                     # Needs to be made consistent with others. TODO: DM-13098
     pixelSize : [0.009, 0.009]          # in mm
     transformDict : {nativeSys : 'Pixels', transforms : None}
@@ -83,9 +83,8 @@ CCDs :
    '0': &S00                            # Sensor (0, 0)
       << : *CCD
       id : 0                            # Not quite sure what this is for
-#      serial : STA1600LN-SN19002       # ACAM1HKO
-      serial : STA1600LN-SN20526        # ACAM2MLO
-      refpos : [5279.5, 5279.5]
+      serial : T80CAM
+      refpos : [4607.0, 4615.0]
       offset : [0, 0]
 
       amplifiers:      # these take the form 00-07, 10-17, ie single digit row/col concatenated, not ints

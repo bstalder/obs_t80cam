@@ -5,12 +5,12 @@ config.parse.retarget(T80camParseTask)
 config.parse.translation = {
     'expTime': 'EXPTIME',
     'object': 'OBJECT',
-    'imageType': 'IMGTYPE',
+    'imageType': 'IMAGETYP',
     'testType': 'TESTTYPE',
     'filter': 'FILTER',
 #    'lsstSerial': 'DETECTOR',
-    'date': 'DATE-OBS',
-    'dateObs': 'DATE-OBS',
+    'date': 'DATE',
+    'dateObs': 'DATE',
 }
 config.parse.translators = {
     'visit': 'translate_visit',

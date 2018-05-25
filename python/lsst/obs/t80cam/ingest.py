@@ -6,6 +6,7 @@ import re
 from lsst.pipe.tasks.ingest import ParseTask
 from lsst.pipe.tasks.ingestCalibs import CalibsParseTask
 import lsst.log as lsstLog
+from astropy.time import Time
 
 EXTENSIONS = ["fits", "gz", "fz"]  # Filename extensions to strip off
 
@@ -107,7 +108,10 @@ class T80camParseTask(ParseTask):
         visit_num : `int`
             Visit number, as translated
         """
-        mjd = md.get("MJD-OBS")
+#        mjd = md.get("MJD-OBS")        # not in the header for t80cam
+        dateobs = md.get("DATE-OBS")    # get start of exposure in UT
+        t = Time(dateobs,format='isot',scale='utc')
+        mjd = t.mjd
         mmjd = mjd - 55197              # relative to 2010-01-01, just to make the visits a tiny bit smaller
         return int(1e5*mmjd)            # 86400s per day, so we need this resolution
 
